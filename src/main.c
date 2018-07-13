@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "sigmoid.h"
+#include "math_lib.h"
 
 int main(int argc, char **argv) {
 	printf("Convolutional neural network, coming soon!\n");

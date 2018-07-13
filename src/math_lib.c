@@ -1,6 +1,6 @@
 #include <math.h>
 #include <assert.h>
-#include "sigmoid.h"
+#include "math_lib.h"
 
 static const double e = 2.71828182845904523536;
 
