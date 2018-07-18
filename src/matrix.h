@@ -54,6 +54,13 @@ double matrix_get(Matrix *m, int row, int col);
 void matrix_set(Matrix *m, int row, int col, double val);
 
 /*
+ * Function:  transpose
+ * --------------------
+ * Returns a new matrix which is the transpose of the given matrix M.
+ */
+Matrix * transpose(Matrix *m);
+
+/*
  * Function:  add_matrices
  * --------------------
  * Returns a new matrix which is the result of performing matrix
@@ -61,5 +68,23 @@ void matrix_set(Matrix *m, int row, int col, double val);
  * on the heap. 
  */
 Matrix * add_matrices(Matrix *a, Matrix *b);
+
+/*
+ * Function:  multiply_matrices
+ * --------------------
+ * Returns a new matrix which is the result of performing matrix
+ * multiplication on the two matrices A and B. The new matrix is allocated
+ * on the heap. 
+ */
+Matrix * multiply_matrices(Matrix *a, Matrix *b);
+
+/*
+ * Function:  hadamard_product
+ * --------------------
+ * Returns a new matrix which is the result of performing Hadamard
+ * multiplication on the two matrices A and B, i.e. pairwise multiplication
+ * for elements in the same position.
+ */
+Matrix * hadamard_product(Matrix *a, Matrix *b);
 
 #endif // MATRIX_H

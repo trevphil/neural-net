@@ -4,6 +4,8 @@
 
 static const double ERROR_TOLERANCE = 1e-10;
 
+#suite math_lib
+
 #test sigmoid_test
 	ck_assert_msg(fabs(sigmoid(INT_MIN) - 0) <= ERROR_TOLERANCE, "sigmoid failed at -inf");
 	ck_assert_msg(fabs(sigmoid(0) - 0.5) <= ERROR_TOLERANCE, "sigmoid(0) should be 0.5");
