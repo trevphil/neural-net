@@ -2,18 +2,18 @@
 #define MATH_LIB_H
 
 /*
- * Function:  sigmoid 
+ * Function:  sigmoid
  * --------------------
- * Computes the sigmoid function for input x
+ * Computes the sigmoid function for input x.
  */
 double sigmoid(double x);
 
 /*
- * Function:  boundedSigmoid 
+ * Function:  bounded_sigmoid
  * --------------------
  * Computes the sigmoid function for input x, but rather than bounded
- * by (0, 1) it is bounded by (minimum, maximum)
+ * by (0, 1) it is bounded by (minimum, maximum).
  */
-double boundedSigmoid(double x, double minimum, double maximum);
+double bounded_sigmoid(double x, double minimum, double maximum);
 
 #endif // MATH_LIB_H

@@ -25,7 +25,7 @@ $(TARGET): $(OBJECTS)
 CHECKS = $(patsubst ./tests/%.check, ./tests/%.c, $(wildcard ./tests/*.check))
 TESTED_FILES = $(filter-out ./src/main.c, $(wildcard ./src/*.c))
 $(TEST): $(CHECKS)
-	$(CC) $(CFLAGS) $(LIBS) $(TESTED_FILES) -lcheck $(CHECKS) -o $@
+	$(foreach check, $(CHECKS), $(CC) $(CFLAGS) $(LIBS) $(TESTED_FILES) -lcheck $(check) -o $@ && ./$@ &&) :
 
 clean:
 	-rm -f *.o
