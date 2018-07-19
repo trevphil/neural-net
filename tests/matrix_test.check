@@ -16,6 +16,14 @@
 	ck_assert(matrix_get(m, 0, 3) == 200.1);
 	free_matrix(m);
 
+#test identity_matrix_test
+	Matrix *m = identity_matrix(5);
+	ck_assert(m->rows == 5 && m->cols == 5);
+	ck_assert(matrix_get(m, 0, 0) == 1);
+	ck_assert(matrix_get(m, 2, 0) == 0);
+	ck_assert(matrix_get(m, 4, 4) == 1);
+	free_matrix(m);
+
 #test copy_matrix_test
 	Matrix *m = make_matrix(5, 5);
 	matrix_set(m, 1, 2, -12.5);

@@ -54,6 +54,13 @@ double matrix_get(Matrix *m, int row, int col);
 void matrix_set(Matrix *m, int row, int col, double val);
 
 /*
+ * Function:  identity_matrix
+ * --------------------
+ * Returns a new nxn Identity matrix, allocated on the heap.
+ */
+Matrix * identity_matrix(int n);
+
+/*
  * Function:  transpose
  * --------------------
  * Returns a new matrix which is the transpose of the given matrix M.

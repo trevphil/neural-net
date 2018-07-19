@@ -44,6 +44,15 @@ void matrix_set(Matrix *m, int row, int col, double val) {
 	m->data[row][col] = val;
 }
 
+Matrix * identity_matrix(int n) {
+	assert(n >= 0);
+	Matrix *m = make_matrix(n, n);
+	for (int i = 0; i < n; i++) {
+		matrix_set(m, i, i, 1);
+	}
+	return m;
+}
+
 Matrix * transpose(Matrix *m) {
 	assert(m);
 	Matrix *trans = make_matrix(m->cols, m->rows);
