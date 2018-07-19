@@ -20,15 +20,15 @@ HEADERS = $(wildcard ./src/*.h)
 $(TARGET): $(OBJECTS)
 	$(CC) $(OBJECTS) -Wall $(LIBS) -o $@
 
-%.c: %.check
+./tests/generated/%.c: ./tests/checks/%.m
 	checkmk $< > $@
-CHECKS = $(patsubst ./tests/%.check, ./tests/%.c, $(wildcard ./tests/*.check))
+CHECKS = $(patsubst ./tests/checks/%.m, ./tests/generated/%.c, $(wildcard ./tests/checks/*.m))
 TESTED_FILES = $(filter-out ./src/main.c, $(wildcard ./src/*.c))
 $(TEST): $(CHECKS)
 	$(foreach check, $(CHECKS), $(CC) $(CFLAGS) $(LIBS) $(TESTED_FILES) -lcheck $(check) -o $@ && ./$@ &&) :
 
 clean:
-	-rm -f *.o
-	-rm -f $(TARGET)
-	-rm -f $(TEST)
-	-rm -f ./tests/*.c
+	find . -name *.o -delete
+	-rm -rf $(TARGET) $(TARGET).dSYM
+	-rm -rf $(TEST) $(TEST).dSYM
+	-rm -f ./tests/generated/*.c

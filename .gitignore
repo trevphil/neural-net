@@ -1,4 +1,5 @@
 main
 test
-tests/*.c
+tests/generated/*
 *.dSYM
+*.o
