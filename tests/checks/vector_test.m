@@ -33,6 +33,17 @@ static const double ERROR_TOLERANCE = 1e-9;
 	free_vector(x);
 	free_vector(y);
 
+#test vector_equality_test
+	Vector *a = make_vector(5);
+	vector_set(a, 1, 2);
+	vector_set(a, 3, 1.2);
+	Vector *b = copy_vector(a);
+	ck_assert(equal_vectors(a, b));
+	vector_set(a, 0, 3.2);
+	ck_assert(!equal_vectors(a, b));
+	free_vector(a);
+	free_vector(b);
+
 #test vector_length_test
 	Vector *v = make_vector(200);
 	ck_assert(vector_length(v) == 200);

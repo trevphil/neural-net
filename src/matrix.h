@@ -38,6 +38,14 @@ void free_matrix(Matrix *m);
 Matrix * copy_matrix(Matrix *m);
 
 /*
+ * Function:  equal_matricies
+ * --------------------
+ * Returns 1 if the matrices are equal (and both non-null),
+ * and 0 otherwise.
+ */
+int equal_matrices(Matrix *a, Matrix *b);
+
+/*
  * Function:  rows
  * --------------------
  * Given a matrix M, returns the number of rows in M.

@@ -40,6 +40,14 @@ void free_vector(Vector *v);
 Vector * copy_vector(Vector *v);
 
 /*
+ * Function:  equal_vectors
+ * --------------------
+ * Returns 1 if the vectors are equal (and both non-null),
+ * and 0 otherwise.
+ */
+int equal_vectors(Vector *a, Vector *b);
+
+/*
  * Function:  vector_length
  * --------------------
  * Returns the size of the given vector v.

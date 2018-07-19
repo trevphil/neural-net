@@ -31,6 +31,18 @@ Matrix * copy_matrix(Matrix *m) {
 	return x;
 }
 
+int equal_matrices(Matrix *a, Matrix *b) {
+	if (!a) return 0;
+	if (!b) return 0;
+	if (rows(a) != rows(b) || cols(a) != cols(b)) return 0;
+	for (int row = 0; row < rows(a); row++) {
+		for (int col = 0; col < cols(b); col++) {
+			if (matrix_get(a, row, col) != matrix_get(b, row, col)) return 0;
+		}
+	}
+	return 1;
+}
+
 int rows(Matrix *m) {
 	assert(m);
 	return m->rows;

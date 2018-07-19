@@ -34,6 +34,17 @@
 	free_matrix(m);
 	free_matrix(n);
 	
+#test matrix_equality_test
+	Matrix *a = make_matrix(5, 5);
+	matrix_set(a, 1, 2, -12.5);
+	matrix_set(a, 0, 3, 200.1);
+	Matrix *b = copy_matrix(a);
+	ck_assert(equal_matrices(a, b));
+	matrix_set(a, 1, 3, 3.2);
+	ck_assert(!equal_matrices(a, b));
+	free_matrix(a);
+	free_matrix(b);
+
 #test rows_cols_matrix_test
 	Matrix *m = make_matrix(21, 37);
 	ck_assert(rows(m) == 21);

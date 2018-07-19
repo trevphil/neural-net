@@ -29,6 +29,13 @@ Vector * copy_vector(Vector *v) {
 	return x;
 }
 
+int equal_vectors(Vector *a, Vector *b) {
+	if (!a) return 0;
+	if (!b) return 0;
+	if (vector_length(a) != vector_length(b)) return 0;
+	return equal_matrices(a->matrix, b->matrix);
+}
+
 int vector_length(Vector *v) {
 	assert(v);
 	return v->length;
