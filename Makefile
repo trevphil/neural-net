@@ -28,7 +28,7 @@ $(TEST): $(CHECKS)
 	$(foreach check, $(CHECKS), $(CC) $(CFLAGS) $(LIBS) $(TESTED_FILES) -lcheck $(check) -o $@ && ./$@ &&) :
 
 clean:
-	-rm -f *.o
-	-rm -f $(TARGET)
-	-rm -f $(TEST)
+	find . -name *.o -delete
+	-rm -rf $(TARGET) $(TARGET).dSYM
+	-rm -rf $(TEST) $(TEST).dSYM
 	-rm -f ./tests/generated/*.c
