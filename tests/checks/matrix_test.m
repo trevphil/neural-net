@@ -1,6 +1,6 @@
 #include "../../src/matrix.h"
 
-#suite matrix
+#suite Matrix
 
 #test make_matrix_test
 	Matrix *m = make_matrix(5, 5);
@@ -18,7 +18,7 @@
 
 #test identity_matrix_test
 	Matrix *m = identity_matrix(5);
-	ck_assert(m->rows == 5 && m->cols == 5);
+	ck_assert(rows(m) == 5 && cols(m) == 5);
 	ck_assert(matrix_get(m, 0, 0) == 1);
 	ck_assert(matrix_get(m, 2, 0) == 0);
 	ck_assert(matrix_get(m, 4, 4) == 1);
@@ -33,13 +33,19 @@
 	ck_assert(matrix_get(n, 0, 3) == 200.1);
 	free_matrix(m);
 	free_matrix(n);
+	
+#test rows_cols_matrix_test
+	Matrix *m = make_matrix(21, 37);
+	ck_assert(rows(m) == 21);
+	ck_assert(cols(m) == 37);
+	free_matrix(m);
 
 #test transpose_matrix_test
 	Matrix *m = make_matrix(20, 5);
 	matrix_set(m, 0, 4, 123);
 	matrix_set(m, 19, 3, 544);
-	Matrix *n = transpose(m);
-	ck_assert(n->rows == 5 && n->cols == 20);
+	Matrix *n = transpose_matrix(m);
+	ck_assert(rows(n) == 5 && cols(n) == 20);
 	ck_assert(matrix_get(n, 4, 0) == 123);
 	ck_assert(matrix_get(n, 3, 19) == 544);
 	free_matrix(m);
@@ -68,7 +74,7 @@
 	matrix_set(b, 1, 4, 7);
 	matrix_set(b, 1, 0, 10);
 	Matrix *c = multiply_matrices(a, b);
-	ck_assert(c->rows == 3 && c->cols == 5);
+	ck_assert(rows(c) == 3 && cols(c) == 5);
 	ck_assert(matrix_get(c, 0, 0) == 0);
 	ck_assert(matrix_get(c, 2, 0) == 100);
 	ck_assert(matrix_get(c, 2, 4) == 70);

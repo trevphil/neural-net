@@ -38,6 +38,20 @@ void free_matrix(Matrix *m);
 Matrix * copy_matrix(Matrix *m);
 
 /*
+ * Function:  rows
+ * --------------------
+ * Given a matrix M, returns the number of rows in M.
+ */
+int rows(Matrix *m);
+
+/*
+ * Function:  cols
+ * --------------------
+ * Given a matrix M, returns the number of columns in M.
+ */
+int cols(Matrix *m);
+
+/*
  * Function:  matrix_get
  * --------------------
  * Given a matrix M, returns the double value located at
@@ -65,14 +79,14 @@ Matrix * identity_matrix(int n);
  * --------------------
  * Returns a new matrix which is the transpose of the given matrix M.
  */
-Matrix * transpose(Matrix *m);
+Matrix * transpose_matrix(Matrix *m);
 
 /*
  * Function:  add_matrices
  * --------------------
  * Returns a new matrix which is the result of performing matrix
  * addition on the two matrices A and B. The new matrix is allocated
- * on the heap. 
+ * on the heap.
  */
 Matrix * add_matrices(Matrix *a, Matrix *b);
 
@@ -81,7 +95,7 @@ Matrix * add_matrices(Matrix *a, Matrix *b);
  * --------------------
  * Returns a new matrix which is the result of performing matrix
  * multiplication on the two matrices A and B. The new matrix is allocated
- * on the heap. 
+ * on the heap.
  */
 Matrix * multiply_matrices(Matrix *a, Matrix *b);
 
