@@ -48,9 +48,17 @@ double vector_get(Vector *v, int i) {
 }
 
 void vector_set(Vector *v, int i, double val) {
-	if (!v) { return; }
+	if (!v) return;
 	assert(i >= 0 && i < vector_length(v));
 	matrix_set(v->matrix, i, 0, val);
+}
+
+void print_vector(Vector *v) {
+	if (!v) return;
+	printf("<Vector: %p>; length=%d\n", v, vector_length(v));
+	for (int i = 0; i < vector_length(v); i++) {
+		printf("| %0.3f |\n", vector_get(v, i));
+	}
 }
 
 Matrix * transpose_vector(Vector *v) {

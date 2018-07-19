@@ -76,6 +76,13 @@ double matrix_get(Matrix *m, int row, int col);
 void matrix_set(Matrix *m, int row, int col, double val);
 
 /*
+ * Function:  print_matrix
+ * --------------------
+ * Prints an easy-to-read representation of M to stdout.
+ */
+void print_matrix(Matrix *m);
+
+/*
  * Function:  identity_matrix
  * --------------------
  * Returns a new nxn Identity matrix, allocated on the heap.

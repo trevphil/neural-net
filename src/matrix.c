@@ -61,10 +61,23 @@ double matrix_get(Matrix *m, int row, int col) {
 }
 
 void matrix_set(Matrix *m, int row, int col, double val) {
-	if (!m) { return; }
+	if (!m) return;
 	assert(row >= 0 && row < rows(m));
 	assert(col >= 0 && col < cols(m));
 	m->data[row][col] = val;
+}
+
+void print_matrix(Matrix *m) {
+	if (!m) return;
+	printf("<Matrix: %p>; size=%dx%d\n", m, rows(m), cols(m));
+	for (int row = 0; row < rows(m); row++) {
+		printf("%s", "| ");
+		for (int col = 0; col < cols(m); col++) {
+			double val = matrix_get(m, row, col);
+			printf("%0.3f\t", val);
+		}
+		printf("%s\n", "|");
+	}
 }
 
 Matrix * identity_matrix(int n) {

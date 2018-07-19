@@ -70,6 +70,13 @@ double vector_get(Vector *v, int i);
 void vector_set(Vector *v, int i, double val);
 
 /*
+ * Function:  print_vector
+ * --------------------
+ * Prints an easy-to-read representation of v to stdout.
+ */
+void print_vector(Vector *v);
+
+/*
  * Function:  transpose_vector
  * --------------------
  * Returns the transpose of the given vector v, i.e. a matrix
