@@ -1,4 +1,4 @@
-#include "../src/matrix.h"
+#include "../../src/matrix.h"
 
 #suite matrix
 
