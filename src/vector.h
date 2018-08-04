@@ -40,6 +40,14 @@ void free_vector(Vector *v);
 Vector * copy_vector(Vector *v);
 
 /*
+ * Function:  vector_as_matrix
+ * --------------------
+ * Returns a matrix representation of the given vector. This matrix
+ * has no dependencies on the passed vector (it can be freed).
+ */
+Matrix * vector_as_matrix(Vector *v);
+
+/*
  * Function:  equal_vectors
  * --------------------
  * Returns 1 if the vectors are equal (and both non-null),
@@ -95,6 +103,14 @@ Matrix * transpose_vector(Vector *v);
 Vector * add_vectors(Vector *x, Vector *y);
 
 /*
+ * Function:  scale_vector
+ * --------------------
+ * Multiplies each element in v by the scalar c. This MUTATES the vector,
+ * rather than returning a newly allocated vector.
+ */
+void scale_vector(Vector *v, double c);
+
+/*
  * Function:  dot_product
  * --------------------
  * Computes the dot-product of the two given vectors x and y.
@@ -139,5 +155,13 @@ double lp_norm(Vector *v, double p);
  * the absolute value of the element with the largest magnitude in v.
  */
 double max_norm(Vector *v);
+
+/*
+ * Function:  mean_vector
+ * --------------------
+ * Given a matrix, computes the average value for each row in the
+ * matrix and puts these averages into a Vector v which is returned.
+ */
+Vector * mean_vector(Matrix *m);
 
 #endif // VECTOR_H

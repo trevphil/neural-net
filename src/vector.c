@@ -29,6 +29,11 @@ Vector * copy_vector(Vector *v) {
 	return x;
 }
 
+Matrix * vector_as_matrix(Vector *v) {
+	assert(v);
+	return copy_matrix(v->matrix);
+}
+
 int equal_vectors(Vector *a, Vector *b) {
 	if (!a) return 0;
 	if (!b) return 0;
@@ -74,6 +79,13 @@ Vector * add_vectors(Vector *x, Vector *y) {
 	free_matrix(z->matrix);
 	z->matrix = add_matrices(x->matrix, y->matrix);
 	return z;
+}
+
+void scale_vector(Vector *v, double c) {
+	if (!v) { return; }
+	for (int i = 0; i < vector_length(v); i++) {
+		vector_set(v, i, vector_get(v, i) * c);
+	}
 }
 
 double dot_product(Vector *x, Vector *y) {
@@ -122,4 +134,19 @@ double max_norm(Vector *v) {
 		maxVal = element > maxVal ? element : maxVal;
 	}
 	return maxVal;
+}
+
+Vector * mean_vector(Matrix *m) {
+	assert(m);
+	assert(cols(m) > 0);
+	Vector *meanV = make_vector(rows(m));
+	for (int row = 0; row < rows(m); row++) {
+		double mean = 0;
+		for (int col = 0; col < cols(m); col++) {
+			mean += matrix_get(m, row, col);
+		}
+		mean /= cols(m);
+		vector_set(meanV, row, mean);
+	}
+	return meanV;
 }

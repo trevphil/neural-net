@@ -123,4 +123,15 @@ Matrix * multiply_matrices(Matrix *a, Matrix *b);
  */
 Matrix * hadamard_product(Matrix *a, Matrix *b);
 
+/*
+ * Function:  scatter_matrix
+ * --------------------
+ * Let's say each column of M is a vector x of length m. Let's say there are
+ * n columns in matrix M. Let meanV be the mean vector for M, i.e. each value
+ * in meanV is the average value for that row in M. Now for each column vector
+ * v in M, we compute Z = (v - meanV) * transpose(v - meanV). The sum of all
+ * of these Z matrices from 1 to n is the scatter matrix. Its size is m x m.
+ */
+Matrix * scatter_matrix(Matrix *m);
+
 #endif // MATRIX_H

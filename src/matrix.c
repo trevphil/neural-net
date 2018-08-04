@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <assert.h>
 #include "matrix.h"
+#include "vector.h"
 
 Matrix * make_matrix(int n_rows, int n_cols) {
 	assert(n_rows >= 0 && n_cols >= 0);
@@ -141,4 +142,19 @@ Matrix * hadamard_product(Matrix *a, Matrix *b) {
 		}
 	}
 	return m;
+}
+
+Matrix * scatter_matrix(Matrix *m) {
+	// FIXME - Avoid memory leaks!!!
+	// 3(a) - https://sebastianraschka.com/Articles/2014_pca_step_by_step.html
+	assert(m);
+	assert(rows(m) > 0 && cols(m) > 0);
+	Vector *meanV = mean_vector(m);
+	Matrix *scatter = make_matrix(rows(m), rows(m));
+	scale_vector(meanV, -1);
+	for (int k = 0; k < cols(m); k++) {
+		// Vector *v = add_vectors()
+		//Matrix *z = 
+	}
+	return NULL;
 }

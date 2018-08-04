@@ -1,4 +1,5 @@
 #include <math.h>
+#include "../../src/matrix.h"
 #include "../../src/vector.h"
 
 static const double ERROR_TOLERANCE = 1e-9;
@@ -32,6 +33,19 @@ static const double ERROR_TOLERANCE = 1e-9;
 	ck_assert(vector_get(y, 9) == -100.2);
 	free_vector(x);
 	free_vector(y);
+	
+#test vector_as_matrix_test
+	Vector *v = make_vector(5);
+	vector_set(v, 0, 3);
+	vector_set(v, 2, 11.5);
+	Matrix *m = vector_as_matrix(v);
+	ck_assert(rows(m) == 5);
+	ck_assert(cols(m) == 1);
+	ck_assert(matrix_get(m, 0, 0) == 3);
+	ck_assert(matrix_get(m, 1, 0) == 0);
+	ck_assert(matrix_get(m, 2, 0) == 11.5);
+	free_vector(v);
+	free_matrix(m);
 
 #test vector_equality_test
 	Vector *a = make_vector(5);
@@ -76,6 +90,17 @@ static const double ERROR_TOLERANCE = 1e-9;
 	free_vector(x);
 	free_vector(y);
 	free_vector(z);
+	
+#test scale_vector_test
+	Vector *v = make_vector(3);
+	vector_set(v, 0, 0.5);
+	vector_set(v, 1, 1);
+	vector_set(v, 2, -20);
+	scale_vector(v, 2);
+	ck_assert(vector_get(v, 0) == 1);
+	ck_assert(vector_get(v, 1) == 2);
+	ck_assert(vector_get(v, 2) == -40);
+	free_vector(v);
 
 #test dot_product_test
 	int n = 3;
@@ -144,3 +169,18 @@ static const double ERROR_TOLERANCE = 1e-9;
 	expected = 100;
 	ck_assert(fabs(max_norm(v) - expected) <= ERROR_TOLERANCE);
 	free_vector(v);
+	
+#test mean_vector_test
+	Matrix *m = make_matrix(3, 3);
+	matrix_set(m, 0, 0, 1);
+	matrix_set(m, 0, 1, 2);
+	matrix_set(m, 0, 2, 3);
+	matrix_set(m, 2, 0, 2);
+	matrix_set(m, 2, 1, 2);
+	matrix_set(m, 2, 2, 2);
+	Vector *meanV = mean_vector(m);
+	ck_assert_msg(vector_get(meanV, 0) == 2, "vector[0] should be 2");
+	ck_assert_msg(vector_get(meanV, 1) == 0, "vector[1] should be 0");
+	ck_assert_msg(vector_get(meanV, 2) == 2, "vector[2] should be 2");
+	free_matrix(m);
+	free_vector(meanV);

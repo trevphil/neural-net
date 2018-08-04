@@ -10,7 +10,7 @@ What better way to understand deep learning and machine learning algorithms than
 
 **Why C?**
 
-Because it's fast. Because it can be for many programmers, which makes it an even more valuable skill to practice.
+Because it's fast. Because it can be difficult for many programmers, which makes it an even more valuable skill to practice.
 
 ## Dependencies
 
@@ -29,7 +29,6 @@ $ ./main
 
 ```
 $ make test
-$ ./test
 ```
 
 ## Cleaning Up
