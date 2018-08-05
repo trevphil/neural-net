@@ -68,6 +68,16 @@ void matrix_set(Matrix *m, int row, int col, double val) {
 	m->data[row][col] = val;
 }
 
+Vector * column_as_vector(Matrix *m, int col) {
+	assert(m);
+	assert(col >= 0 && col < cols(m));
+	Vector *v = make_vector(rows(m));
+	for (int row = 0; row < rows(m); row++) {
+		vector_set(v, row, matrix_get(m, row, col));
+	}
+	return v;
+}
+
 void print_matrix(Matrix *m) {
 	if (!m) return;
 	printf("<Matrix: %p>; size=%dx%d\n", m, rows(m), cols(m));
@@ -75,7 +85,7 @@ void print_matrix(Matrix *m) {
 		printf("%s", "| ");
 		for (int col = 0; col < cols(m); col++) {
 			double val = matrix_get(m, row, col);
-			printf("%0.3f\t", val);
+			printf("%6.3f\t", val);
 		}
 		printf("%s\n", "|");
 	}
@@ -114,6 +124,18 @@ Matrix * add_matrices(Matrix *a, Matrix *b) {
 	return m;
 }
 
+void add_matrices_inplace(Matrix *a, Matrix *b) {
+	assert(a);
+	assert(b);
+	assert(rows(a) == rows(b) && cols(a) == cols(b));
+	for (int row = 0; row < rows(a); row++) {
+		for (int col = 0; col < cols(a); col++) {
+			double sum = matrix_get(a, row, col) + matrix_get(b, row, col);
+			matrix_set(a, row, col, sum);
+		}
+	}
+}
+
 Matrix * multiply_matrices(Matrix *a, Matrix *b) {
 	assert(a);
 	assert(b);
@@ -121,7 +143,7 @@ Matrix * multiply_matrices(Matrix *a, Matrix *b) {
 	Matrix *m = make_matrix(rows(a), cols(b));
 	for (int i = 0; i < rows(a); i++) {
 		for (int j = 0; j < cols(b); j++) {
-			int sum = 0;
+			double sum = 0;
 			for (int k = 0; k < cols(a); k++) {
 				sum += matrix_get(a, i, k) * matrix_get(b, k, j);
 			}
@@ -144,17 +166,39 @@ Matrix * hadamard_product(Matrix *a, Matrix *b) {
 	return m;
 }
 
+int is_symmetric(Matrix *m) {
+	if (!m) { return 0; }
+	if (rows(m) != cols(m)) { return 0; }
+	Matrix *transpose = transpose_matrix(m);
+	int result = equal_matrices(m, transpose);
+	free_matrix(transpose);
+	return result;
+}
+
 Matrix * scatter_matrix(Matrix *m) {
-	// FIXME - Avoid memory leaks!!!
-	// 3(a) - https://sebastianraschka.com/Articles/2014_pca_step_by_step.html
 	assert(m);
 	assert(rows(m) > 0 && cols(m) > 0);
+
+	// Use the mean vector to pre-process data, ensuring values are relative to mean
 	Vector *meanV = mean_vector(m);
-	Matrix *scatter = make_matrix(rows(m), rows(m));
 	scale_vector(meanV, -1);
+	Matrix *mean = vector_as_matrix(meanV);
+	free_vector(meanV);
+	// Now, 'mean' is the NEGATIVE mean vector, represented as a matrix with 1 column
+	
+	Matrix *scatter = make_matrix(rows(m), rows(m)); // Matrix allocated
 	for (int k = 0; k < cols(m); k++) {
-		// Vector *v = add_vectors()
-		//Matrix *z = 
+		Vector *v = column_as_vector(m, k);
+		Matrix *x = vector_as_matrix(v);
+		add_matrices_inplace(x, mean);
+		Matrix *xTranspose = transpose_matrix(x);
+		Matrix *multiplicationResult = multiply_matrices(x, xTranspose);
+		add_matrices_inplace(scatter, multiplicationResult);
+		free_vector(v);
+		free_matrix(x);
+		free_matrix(xTranspose);
+		free_matrix(multiplicationResult);
 	}
-	return NULL;
+	free_matrix(mean);
+	return scatter;
 }

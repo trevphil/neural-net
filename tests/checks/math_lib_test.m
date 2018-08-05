@@ -18,19 +18,3 @@ static const double ERROR_TOLERANCE = 1e-10;
 		"bounded_sigmoid(0, 2, 4) should be 3.0");
 	ck_assert_msg(fabs(bounded_sigmoid(INT_MAX, 0, 20) - 20) <= ERROR_TOLERANCE,
 		"bounded_sigmoid failed at +inf");
-
-#test normal_dist_test
-	double result = normal_dist(3, 5, 100);
-	ck_assert(fabs(result - 0.03910426939) <= ERROR_TOLERANCE);
-	result = normal_dist(4, -2, 2);
-	ck_assert(fabs(result - 0.00003481326) <= ERROR_TOLERANCE);
-	result = normal_dist(-10, 0, 25);
-	ck_assert(fabs(result - 0.0107981933) <= ERROR_TOLERANCE);
-	
-#test std_normal_dist_test
-	double result = std_normal_dist(0);
-	ck_assert(fabs(result - 0.398942280401) <= ERROR_TOLERANCE);
-	result = std_normal_dist(1);
-	ck_assert(fabs(result - 0.241970724519) <= ERROR_TOLERANCE);
-	result = std_normal_dist(-1);
-	ck_assert(fabs(result - 0.241970724519) <= ERROR_TOLERANCE);

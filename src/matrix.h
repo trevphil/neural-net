@@ -1,6 +1,9 @@
 #ifndef MATRIX_H
 #define MATRIX_H
 
+/* Vector imports Matrix, this avoids the dependency loop */
+typedef struct Vector Vector;
+
 /*
  * Data-structure:  Matrix
  * --------------------
@@ -76,6 +79,14 @@ double matrix_get(Matrix *m, int row, int col);
 void matrix_set(Matrix *m, int row, int col, double val);
 
 /*
+ * Function:  column_as_vector
+ * --------------------
+ * Given a matrix M and zero-indexed column 'col', returns
+ * the values in that column as a matrix
+ */
+Vector * column_as_vector(Matrix *m, int col);
+
+/*
  * Function:  print_matrix
  * --------------------
  * Prints an easy-to-read representation of M to stdout.
@@ -106,6 +117,14 @@ Matrix * transpose_matrix(Matrix *m);
 Matrix * add_matrices(Matrix *a, Matrix *b);
 
 /*
+ * Function:  add_matrices_inplace
+ * --------------------
+ * Adds values from matrix B to the corresponding elements in A.
+ * This mutates A and returns nothing.
+ */
+void add_matrices_inplace(Matrix *a, Matrix *b);
+
+/*
  * Function:  multiply_matrices
  * --------------------
  * Returns a new matrix which is the result of performing matrix
@@ -122,6 +141,14 @@ Matrix * multiply_matrices(Matrix *a, Matrix *b);
  * for elements in the same position.
  */
 Matrix * hadamard_product(Matrix *a, Matrix *b);
+
+/*
+ * Function:  is_symmetric
+ * --------------------
+ * Returns a non-zero value if the matrix M is symmetric, i.e. if it is
+ * equal to its transpose. Consequently it must be a square matrix.
+ */
+int is_symmetric(Matrix *m);
 
 /*
  * Function:  scatter_matrix
