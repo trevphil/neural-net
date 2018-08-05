@@ -2,7 +2,7 @@
 #include <assert.h>
 #include "math_lib.h"
 
-static const double e = 2.71828182845904523536;
+static const double e = M_E;
 
 double bounded_sigmoid(double x, double minimum, double maximum) {
 	assert(minimum <= maximum);

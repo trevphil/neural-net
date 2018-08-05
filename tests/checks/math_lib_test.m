@@ -4,13 +4,13 @@
 
 static const double ERROR_TOLERANCE = 1e-10;
 
-#suite math_lib
+#suite MathLib
 
 #test sigmoid_test
 	ck_assert_msg(fabs(sigmoid(INT_MIN) - 0) <= ERROR_TOLERANCE, "sigmoid failed at -inf");
 	ck_assert_msg(fabs(sigmoid(0) - 0.5) <= ERROR_TOLERANCE, "sigmoid(0) should be 0.5");
 	ck_assert_msg(fabs(sigmoid(INT_MAX) - 1) <= ERROR_TOLERANCE, "sigmoid failed at +inf");
-	
+
 #test bounded_sigmoid_test
 	ck_assert_msg(fabs(bounded_sigmoid(INT_MIN, -10, 10) - (-10)) <= ERROR_TOLERANCE,
 		"bounded_sigmoid failed at -inf");

@@ -1,6 +1,9 @@
 #ifndef MATRIX_H
 #define MATRIX_H
 
+/* Vector imports Matrix, this avoids the dependency loop */
+typedef struct Vector Vector;
+
 /*
  * Data-structure:  Matrix
  * --------------------
@@ -38,6 +41,28 @@ void free_matrix(Matrix *m);
 Matrix * copy_matrix(Matrix *m);
 
 /*
+ * Function:  equal_matricies
+ * --------------------
+ * Returns 1 if the matrices are equal (and both non-null),
+ * and 0 otherwise.
+ */
+int equal_matrices(Matrix *a, Matrix *b);
+
+/*
+ * Function:  rows
+ * --------------------
+ * Given a matrix M, returns the number of rows in M.
+ */
+int rows(Matrix *m);
+
+/*
+ * Function:  cols
+ * --------------------
+ * Given a matrix M, returns the number of columns in M.
+ */
+int cols(Matrix *m);
+
+/*
  * Function:  matrix_get
  * --------------------
  * Given a matrix M, returns the double value located at
@@ -54,6 +79,21 @@ double matrix_get(Matrix *m, int row, int col);
 void matrix_set(Matrix *m, int row, int col, double val);
 
 /*
+ * Function:  column_as_vector
+ * --------------------
+ * Given a matrix M and zero-indexed column 'col', returns
+ * the values in that column as a matrix
+ */
+Vector * column_as_vector(Matrix *m, int col);
+
+/*
+ * Function:  print_matrix
+ * --------------------
+ * Prints an easy-to-read representation of M to stdout.
+ */
+void print_matrix(Matrix *m);
+
+/*
  * Function:  identity_matrix
  * --------------------
  * Returns a new nxn Identity matrix, allocated on the heap.
@@ -65,23 +105,31 @@ Matrix * identity_matrix(int n);
  * --------------------
  * Returns a new matrix which is the transpose of the given matrix M.
  */
-Matrix * transpose(Matrix *m);
+Matrix * transpose_matrix(Matrix *m);
 
 /*
  * Function:  add_matrices
  * --------------------
  * Returns a new matrix which is the result of performing matrix
  * addition on the two matrices A and B. The new matrix is allocated
- * on the heap. 
+ * on the heap.
  */
 Matrix * add_matrices(Matrix *a, Matrix *b);
+
+/*
+ * Function:  add_matrices_inplace
+ * --------------------
+ * Adds values from matrix B to the corresponding elements in A.
+ * This mutates A and returns nothing.
+ */
+void add_matrices_inplace(Matrix *a, Matrix *b);
 
 /*
  * Function:  multiply_matrices
  * --------------------
  * Returns a new matrix which is the result of performing matrix
  * multiplication on the two matrices A and B. The new matrix is allocated
- * on the heap. 
+ * on the heap.
  */
 Matrix * multiply_matrices(Matrix *a, Matrix *b);
 
@@ -93,5 +141,24 @@ Matrix * multiply_matrices(Matrix *a, Matrix *b);
  * for elements in the same position.
  */
 Matrix * hadamard_product(Matrix *a, Matrix *b);
+
+/*
+ * Function:  is_symmetric
+ * --------------------
+ * Returns a non-zero value if the matrix M is symmetric, i.e. if it is
+ * equal to its transpose. Consequently it must be a square matrix.
+ */
+int is_symmetric(Matrix *m);
+
+/*
+ * Function:  scatter_matrix
+ * --------------------
+ * Let's say each column of M is a vector x of length m. Let's say there are
+ * n columns in matrix M. Let meanV be the mean vector for M, i.e. each value
+ * in meanV is the average value for that row in M. Now for each column vector
+ * v in M, we compute Z = (v - meanV) * transpose(v - meanV). The sum of all
+ * of these Z matrices from 1 to n is the scatter matrix. Its size is m x m.
+ */
+Matrix * scatter_matrix(Matrix *m);
 
 #endif // MATRIX_H
