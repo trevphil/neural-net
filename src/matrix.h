@@ -97,6 +97,7 @@ void print_matrix(Matrix *m);
  * Function:  identity_matrix
  * --------------------
  * Returns a new nxn Identity matrix, allocated on the heap.
+ * A square matrix with 1's on the diagonal, 0's everywhere else.
  */
 Matrix * identity_matrix(int n);
 
