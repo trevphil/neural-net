@@ -118,3 +118,47 @@ void find_eigen(Matrix *input, double *eigenvalues, Vector **eigenvectors) {
 	// I have the desire/need to optimize further.
 	jacobi(input, eigenvalues, eigenvectors);
 }
+
+int partition_parallel(double *arr1, Vector **arr2, int low, int high, int descending) {
+    double pivot = fabs(arr1[high]);
+    int i = low - 1;
+
+    for (int j = low; j <= high - 1; j++) {
+		int swapNeeded = descending ? fabs(arr1[j]) >= pivot : fabs(arr1[j]) <= pivot;
+        if (swapNeeded) {
+            i++;
+			// Perform swap for array 1
+			double tmp1 = arr1[i];
+			arr1[i] = arr1[j];
+			arr1[j] = tmp1;
+			// Perform swap for array 2
+			Vector *tmp2 = arr2[i];
+			arr2[i] = arr2[j];
+			arr2[j] = tmp2;
+        }
+    }
+
+	// Perform swap for array 1
+	double tmp1 = arr1[i + 1];
+	arr1[i + 1] = arr1[high];
+	arr1[high] = tmp1;
+	// Perform swap for array 2
+	Vector *tmp2 = arr2[i + 1];
+	arr2[i + 1] = arr2[high];
+	arr2[high] = tmp2;
+
+    return i + 1;
+}
+
+void quick_sort_parallel(double *arr1, Vector **arr2, int low, int high, int descending) {
+    if (low < high) {
+        int partitionIndex = partition_parallel(arr1, arr2, low, high, descending);
+        quick_sort_parallel(arr1, arr2, low, partitionIndex - 1, descending);
+        quick_sort_parallel(arr1, arr2, partitionIndex + 1, high, descending);
+    }
+}
+
+void sort_vectors_by_values(int n, double *eigenvalues, Vector **eigenvectors, int descending) {
+	// Use a slightly modified version of quicksort to perform this operation
+	quick_sort_parallel(eigenvalues, eigenvectors, 0, n - 1, descending);
+}
