@@ -40,11 +40,12 @@
 		"Std normal distribution produced an unexpectedly high number of tail-ended values!");
 
 #test generate_vectors_test
-	Vector **generated = generate_vectors(10, 3, std_normal_dist_sample);
+	int vectorSize = 3;
+	Vector **generated = generate_vectors(10, vectorSize, std_normal_dist_sample);
 	for (int i = 0; i < 10; i++) {
 		Vector *v = generated[i];
 		// All values ought to be within 4 std. deviations i.e. [-4, 4]
-		ck_assert(vector_length(v) == 3);
+		ck_assert(vector_length(v) == vectorSize);
 		ck_assert(vector_get(v, 0) >= -4 && vector_get(v, 0) <= 4);
 		ck_assert(vector_get(v, 1) >= -4 && vector_get(v, 1) <= 4);
 		ck_assert(vector_get(v, 2) >= -4 && vector_get(v, 2) <= 4);
