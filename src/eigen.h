@@ -10,7 +10,8 @@
  * Computes the eigenvalues and eigenvectors of the REAL SYMMETRIC MATRIX
  * given as input. The results are written into the passed parameters,
  * so the array of eigenvalues and the array of eigenvectors should both
- * have length N, given that the input is an NxN matrix.
+ * have length N, given that the input is an NxN matrix. The eigenvectors
+ * will each have length of approximately 1.
  */
 void find_eigen(Matrix *input, double *eigenvalues, Vector **eigenvectors);
 

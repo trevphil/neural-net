@@ -22,7 +22,7 @@
 		if (x < -4 || x > 8) count++;
 	}
 	int expected = (int)(sampleSize * 0.1336);
-	int marginOfError = (int)(expected * 0.1);
+	int marginOfError = (int)(expected * 0.15);
 	ck_assert_msg(count <= expected + marginOfError,
 		"Normal distribution produced an unexpectedly high number of tail-ended values!");
 		
@@ -35,7 +35,7 @@
 		if (x < -2 || x > 2) count++;
 	}
 	int expected = (int)(sampleSize * 0.0455);
-	int marginOfError = (int)(expected * 0.1);
+	int marginOfError = (int)(expected * 0.15);
 	ck_assert_msg(count <= expected + marginOfError,
 		"Std normal distribution produced an unexpectedly high number of tail-ended values!");
 

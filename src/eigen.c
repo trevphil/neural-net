@@ -6,13 +6,14 @@
 // http://www.cmi.ac.in/~ksutar/NLA2013/iterativemethods.pdf
 
 void jacobi(Matrix *input, double *eigenvalues, Vector **eigenvectors) {
-	assert(is_symmetric(input));
+	assert(is_symmetric(input) && rows(input) > 1);
 	int n = rows(input);
 	double zeroApproximate = 1e-4;
 	double pi = M_PI;
+	double theta;
 	Matrix *d = copy_matrix(input);
 	Matrix *s = identity_matrix(n);
-	int flag, p, q, theta;
+	int flag, p, q;
 
 	do {
 		flag = 0;
@@ -53,8 +54,8 @@ void jacobi(Matrix *input, double *eigenvalues, Vector **eigenvectors) {
 
 		Matrix *temp = make_matrix(n, n);
 		for (int row = 0; row < n; row++) {
-			for (int col = 0; col < 0; col++) {
-				for (p = 1; p < n; p++) {
+			for (int col = 0; col < n; col++) {
+				for (p = 0; p < n; p++) {
 					double currentVal = matrix_get(temp, row, col);
 					double product = matrix_get(s1t, row, p) * matrix_get(d, p, col);
 					matrix_set(temp, row, col, currentVal + product);
@@ -101,13 +102,13 @@ void jacobi(Matrix *input, double *eigenvalues, Vector **eigenvectors) {
 		free_matrix(s1t);
 		free_matrix(temp);
 	} while (flag);
-	
+
 	// Extract eigenvalues and eigenvectors, write them into the passed arguments
 	for (int i = 0; i < n; i++) {
 		eigenvalues[i] = matrix_get(d, i, i);
 		eigenvectors[i] = column_as_vector(s, i);
 	}
-	
+
 	free_matrix(d);
 	free_matrix(s);
 }

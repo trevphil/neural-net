@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include "../../src/eigen.h"
 
-// static const double ERROR_TOLERANCE = 1e-10;
+static const double ERROR_TOLERANCE = 1e-4;
 
 #suite Eigen
 
@@ -18,17 +18,35 @@
 	matrix_set(m, 2, 0, 5);
 	matrix_set(m, 2, 1, 11);
 	matrix_set(m, 2, 2, -20);
-	double eigenvalues[n]; // expected -0.19128, 9.19836, -25.00707
-	Vector *eigenvectors[n]; // expected...
-	// < -30.48116,	15.65586,	1 >
-	// < 1.13191,	2.13989,	1 >
-	// < -0.16295,	-0.38112,	1 >
-	find_eigen(m, &eigenvalues, &eigenvectors);
-	for (int i = 0; i < n; i++) {
-		printf("Eigenvalue %d is %f\n", i, eigenvalues[i]);
-		printf("%s\n", "The corresponding eigenvector is");
-		print_vector(eigenvectors[i]);
-		printf("%s\n", "");
-		free_vector(eigenvectors[i]);
-	}
+
+	double *eigenvalues = calloc(n, sizeof(double));
+	Vector **eigenvectors = calloc(n, sizeof(Vector));
+	find_eigen(m, eigenvalues, eigenvectors);
+	
+	ck_assert(fabs(eigenvalues[0] + 0.19128) <= ERROR_TOLERANCE);
+	ck_assert(vector_length(eigenvectors[0]) == 3);
+	ck_assert(fabs(vector_get(eigenvectors[0], 0) - 0.889148) <= ERROR_TOLERANCE);
+	ck_assert(fabs(vector_get(eigenvectors[0], 1) + 0.456688) <= ERROR_TOLERANCE);
+	ck_assert(fabs(vector_get(eigenvectors[0], 2) + 0.029170) <= ERROR_TOLERANCE);
+	ck_assert(fabs(l2_norm(eigenvectors[0]) - 1.0) <= ERROR_TOLERANCE);
+	free_vector(eigenvectors[0]);
+
+	ck_assert(fabs(eigenvalues[1] - 9.19836) <= ERROR_TOLERANCE);
+	ck_assert(vector_length(eigenvectors[1]) == 3);
+	ck_assert(fabs(vector_get(eigenvectors[1], 0) - 0.432153) <= ERROR_TOLERANCE);
+	ck_assert(fabs(vector_get(eigenvectors[1], 1) - 0.816994) <= ERROR_TOLERANCE);
+	ck_assert(fabs(vector_get(eigenvectors[1], 2) - 0.381791) <= ERROR_TOLERANCE);
+	ck_assert(fabs(l2_norm(eigenvectors[1]) - 1.0) <= ERROR_TOLERANCE);
+	free_vector(eigenvectors[1]);
+
+	ck_assert(fabs(eigenvalues[2] + 25.00707) <= ERROR_TOLERANCE);
+	ck_assert(vector_length(eigenvectors[2]) == 3);
+	ck_assert(fabs(vector_get(eigenvectors[2], 0) + 0.150527) <= ERROR_TOLERANCE);
+	ck_assert(fabs(vector_get(eigenvectors[2], 1) + 0.352075) <= ERROR_TOLERANCE);
+	ck_assert(fabs(vector_get(eigenvectors[2], 2) - 0.923788) <= ERROR_TOLERANCE);
+	ck_assert(fabs(l2_norm(eigenvectors[2]) - 1.0) <= ERROR_TOLERANCE);
+	free_vector(eigenvectors[2]);
+
 	free_matrix(m);
+	free(eigenvalues);
+	free(eigenvectors);
