@@ -91,9 +91,8 @@ Vector * column_as_vector(Matrix *m, int col);
  * --------------------
  * Given an array of N vectors which MUST be the same size M,
  * will "merge" them into a matrix with shape M x N.
- * The given vectors will be FREED from memory if discardable != 0.
  */
-Matrix * vectors_to_matrix(int numVectors, Vector **vectors, int discardable);
+Matrix * vectors_to_matrix(int numVectors, Vector **vectors);
 
 /*
  * Function:  print_matrix
