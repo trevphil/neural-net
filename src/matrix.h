@@ -87,6 +87,14 @@ void matrix_set(Matrix *m, int row, int col, double val);
 Vector * column_as_vector(Matrix *m, int col);
 
 /*
+ * Function:  vectors_to_matrix
+ * --------------------
+ * Given an array of N vectors which MUST be the same size M,
+ * will "merge" them into a matrix with shape M x N.
+ */
+Matrix * vectors_to_matrix(int numVectors, Vector **vectors);
+
+/*
  * Function:  print_matrix
  * --------------------
  * Prints an easy-to-read representation of M to stdout.

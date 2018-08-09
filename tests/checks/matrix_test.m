@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "../../src/vector.h"
 #include "../../src/matrix.h"
 
@@ -29,6 +30,25 @@
 	ck_assert(vector_get(v, 2) == 103);
 	free_matrix(m);
 	free_vector(v);
+	
+#test vectors_to_matrix_test
+	Vector **vectors = calloc(2, sizeof(Vector));
+	vectors[0] = make_vector(2);
+	vector_set(vectors[0], 0, 1);
+	vector_set(vectors[0], 1, 2);
+	vectors[1] = make_vector(2);
+	vector_set(vectors[1], 0, 3);
+	vector_set(vectors[1], 1, 4);
+	Matrix *m = vectors_to_matrix(2, vectors);
+	ck_assert(rows(m) == 2 && cols(m) == 2);
+	ck_assert(matrix_get(m, 0, 0) == 1);
+	ck_assert(matrix_get(m, 1, 0) == 2);
+	ck_assert(matrix_get(m, 0, 1) == 3);
+	ck_assert(matrix_get(m, 1, 1) == 4);
+	free_matrix(m);
+	free_vector(vectors[0]);
+	free_vector(vectors[1]);
+	free(vectors);
 
 #test identity_matrix_test
 	Matrix *m = identity_matrix(5);

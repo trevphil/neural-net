@@ -78,6 +78,20 @@ Vector * column_as_vector(Matrix *m, int col) {
 	return v;
 }
 
+Matrix * vectors_to_matrix(int numVectors, Vector **vectors) {
+	assert(numVectors > 0);
+	int vectorSize = vector_length(vectors[0]);
+	assert(vectorSize > 0);
+	Matrix *m = make_matrix(vectorSize, numVectors);
+	for (int col = 0; col < numVectors; col++) {
+		assert(vector_length(vectors[col]) == vectorSize);
+		for (int row = 0; row < vectorSize; row++) {
+			matrix_set(m, row, col, vector_get(vectors[col], row));
+		}
+	}
+	return m;
+}
+
 void print_matrix(Matrix *m) {
 	if (!m) return;
 	printf("<Matrix: %p>; size=%dx%d\n", m, rows(m), cols(m));
